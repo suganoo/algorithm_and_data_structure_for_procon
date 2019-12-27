@@ -59,6 +59,29 @@ void solve(){
     cout << dp[i] << " ";
   }
   cout << endl;
+
+  long long res = 0;
+  long long val = -1;
+  for (int i =0; i <= s; i++) if (chmax(res, dp[i])) val = vs[i];
+
+  // 復元
+  vector<int> ans;
+  int end = N;
+  for (int i = 0; i < res; i++) {
+    int it = lower_bound(pl[val].begin(), pl[val].end(), end) - pl[val].begin();
+    it--;
+    ans.push_back(pl[val][it]);
+    end = pl[val][it];
+    val--;
+  }
+  reverse(ans.begin(), ans.end());
+
+  count << res << endl;
+  for (int i = 0; i < res; i++) {
+    if (i) cout << " ";
+    cout << ans[i] + 1;
+  }
+  cout << endl;
 }
 
 int main(){
