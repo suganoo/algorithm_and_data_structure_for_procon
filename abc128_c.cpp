@@ -25,23 +25,23 @@ int main(){
     p.push_back(b);
   }
 
-  int num = 11;
-  bitset<10> bs(num);
-  cout << bs << endl;
-  cout << bs[0] << endl;
-  cout << bs[1] << endl;
-  cout << bs[2] << endl;
-  cout << bs[N-1] << endl;
-  cout << bs[N-2] << endl;
+  int ans = 0;
   for (int bit = 0; bit < ( 1 << N ); bit++) {
-    cout << "--- " << bit << endl;
     bitset<10> bs(bit);
-    for (int n = 0; n < ( 1 << N ); n++) {
-      cout << bs[n] ;
-      if (bs[n]){
-        cout << " on";
+
+    int s_pos = 0;
+    int m_on  = 0;
+    for (auto s1: s) {
+      int sum = 0;
+      for (int pos: s1) {
+        sum += bs[pos - 1];
       }
-      cout << endl;
+      if (sum % 2 == p[s_pos]) m_on++;
+
+      s_pos++;
     }
+
+    if (m_on == M) ans++;
   }
+  cout << ans << endl;
 }
