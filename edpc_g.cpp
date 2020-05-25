@@ -18,6 +18,7 @@ int main(){
 
   bool seen[MAX + 1] = {false};
 
+
   queue<int> q;
   q.push(1);
   while (q.size()) {
