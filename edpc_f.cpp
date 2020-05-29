@@ -8,26 +8,39 @@ int main(){
   cin >> s;
   cin >> t;
 
-  vector<vector<string>> dp;
-  vector<string> init_str;
-  init_str.assign(MAX, "");
-  dp.assign(MAX, init_str);
-
   s = " " + s;
   t = " " + t;
+  int maxl_s = s.length();
+  int maxl_t = t.length();
+  int dp[maxl_s + 1][maxl_t + 1];
+  for (int i = 0; i <= maxl_s; i++) {
+    for (int j = 0; j <= maxl_t; j++) {
+      dp[i][j] = 0;
+    }
+  }
 
-  for (int i = 1; i <= s.size(); i++) {
-    for (int j = 1; j <= t.size(); j++) {
+  for (int i = 1; i < maxl_s; i++) {
+    for (int j = 1; j < maxl_t; j++) {
       if (s[i] == t[j]) {
-        dp[i][j] = dp[i-1][j-1] + s[i];
+        dp[i][j] = dp[i-1][j-1] + 1;
       } else {
-        if (dp[i-1][j].size() <= dp[i][j-1].size()) {
-	  dp[i][j] = dp[i][j-1];
-	} else {
-	  dp[i][j] = dp[i-1][j];
-	}
+        dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
       }
     }
   }
-  cout << dp[s.size()][t.size()] << endl;
+  string ans = "";
+  int i = maxl_s - 1;
+  int j = maxl_t - 1;
+  while (0 < i && 0 < j) {
+      if (dp[i][j] == dp[i-1][j]) {
+        i--;
+      } else if (dp[i][j] == dp[i][j-1]) {
+        j--;
+      } else {
+        ans = s[i] + ans;
+	i--;
+	j--;
+      }
+  }
+  cout << ans << endl;
 }

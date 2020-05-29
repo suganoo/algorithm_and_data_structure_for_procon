@@ -3,25 +3,35 @@ using namespace std;
 
 #define MAX 100000
 
+int N, M;
+vector<int> G[MAX + 1];
+int dp[MAX + 1] = {0};
+int seen[MAX + 1] = {false};
+
+int rec(int now_pos) {
+  if (seen[now_pos]) return dp[now_pos];
+
+  seen[now_pos] = true;
+
+  int distance = 0;
+  for (int next: G[now_pos]) {
+    distance = max(distance, rec(next) + 1 );
+  }
+  return dp[now_pos] = distance;
+}
+
 int main(){
-  int N, M;
   cin >> N >> M;
 
-  int G[MAX + 1][MAX + 1] = {0};
   for (int i = 0; i < M; i++) {
     int a, b;
     cin >> a >> b;
-    G[a][b] = 1;
+    G[a].push_back(b);
   }
 
-  int dp[MAX + 1] = {0};
-
-  bool seen[MAX + 1] = {false};
-
-
-  queue<int> q;
-  q.push(1);
-  while (q.size()) {
-    
+  int ans = 0;
+  for (int i = 1; i <= N; i++) {
+    ans = max(ans, rec(i));
   }
+  cout << ans << endl;
 }
