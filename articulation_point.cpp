@@ -9,6 +9,7 @@ bool visited[MAX];
 int prenum[MAX], parent[MAX], lowest[MAX], timer;
 
 void dfs(int current, int prev){
+  cout << "current = " << current << " prev = " << prev << endl;
   prenum[current] = lowest[current] = timer;
   timer++;
 
@@ -18,12 +19,19 @@ void dfs(int current, int prev){
 
   for (int i = 0; i < G[current].size(); i++) {
     next = G[current][i];
+    cout << "next = " << next << endl;
     if (!visited[next]){
+      cout << "not visited" << endl;
       parent[next] = current;
       dfs(next, current);
+      cout << "lowest[" << current << "] = " << lowest[current] << " lowest[" << next << "] = " << lowest[next] << endl;
       lowest[current] = min(lowest[current], lowest[next]);
+      cout << " ---> lowest[" << current << "] = " << lowest[current] << endl;
     } else if (next != prev) {
+      cout << "visited" << endl;
+      cout << "lowest[" << current << "] = " << lowest[current] << " prenum[" << next << "] = " << prenum[next] << endl;
       lowest[current] = min(lowest[current], prenum[next]);
+      cout << " ---> lowest[" << current << "] = " << lowest[current] << endl;
     }
   }
 }
