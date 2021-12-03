@@ -20,10 +20,11 @@ void dfs(int u){
 ll cnt;
 void dfs2(int i){
     if(i==path.size()){
+        cout << "--- cnt up ---" << endl;
         cnt++;
         return;
     }
-
+    cout << "i=" << i << " col="<< col[i-1] << endl;
     int u=path[i];
     for(int c=0;c<3;c++){
         col[u]=c;
@@ -32,7 +33,10 @@ void dfs2(int i){
         for(int v:G[u]){
             if(col[v]==c) flag=0;
         }
-        if(flag) dfs2(i+1);
+        if(flag) {
+            
+            dfs2(i+1);
+        }
     }
 
     col[u]=-1;    
@@ -55,6 +59,11 @@ int main(){
     for(int i=0;i<n;i++){
         path=vector<int>();
         dfs(i);
+        cout << "---path---" << endl;
+        for (auto x : path){
+            cout << x << endl;
+        }
+        cout << "------" << endl;
         if(path.size()==0) continue;
 
         ans*=3;
